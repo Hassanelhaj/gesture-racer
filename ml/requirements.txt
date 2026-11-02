@@ -1,0 +1,6 @@
+# Training + export toolchain. Python 3.10+.
+# torch: CPU build is plenty (the model has ~1,000 parameters).
+torch>=2.2
+numpy>=1.26
+onnx>=1.16
+onnxruntime>=1.18

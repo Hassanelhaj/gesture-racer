@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GestureRacer: data collector</title>
+    <style>
+      :root { color-scheme: dark; font-family: system-ui, sans-serif; }
+      body { margin: 0; padding: 24px; background: #12102a; color: #e8ecf4; display: grid; gap: 20px; max-width: 760px; margin-inline: auto; }
+      h1 { margin: 0; font-size: 22px; }
+      p, li { line-height: 1.5; color: #b9b6d6; }
+      .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+      button { font: inherit; padding: 10px 16px; border-radius: 10px; border: 0; background: #4a419c; color: #fff; cursor: pointer; }
+      button:disabled { opacity: 0.4; cursor: not-allowed; }
+      button.sel { outline: 3px solid #9be8cf; background: #3fbf98; color: #06241b; }
+      button.primary { background: #e5476b; }
+      #view { position: relative; width: 320px; height: 240px; border-radius: 14px; overflow: hidden; background: #000; }
+      video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+      #countdown { position: absolute; inset: 0; display: grid; place-items: center; font-size: 96px; font-weight: 800; text-shadow: 0 4px 16px #000; }
+      table { border-collapse: collapse; width: 100%; }
+      td, th { padding: 6px 10px; text-align: left; border-bottom: 1px solid #2d2a55; }
+      progress { width: 100%; height: 14px; }
+      pre { margin: 0; padding: 10px; background: #0b0a1d; border-radius: 10px; font-size: 12px; overflow-x: auto; }
+      #status { min-height: 1.5em; color: #ffd36e; }
+    </style>
+  </head>
+  <body>
+    <h1>GestureRacer data collector</h1>
+    <p>
+      Records 12 numbers per camera frame (no images are stored or sent anywhere). Pick a gesture, press
+      Record, hold the pose for about two seconds while moving a little, repeat with different distances,
+      positions and tilt angles. Aim for at least 300 frames and 6 takes per gesture, across 3+ sessions.
+    </p>
+
+    <div class="row">
+      <button id="start" class="primary">Start camera</button>
+      <span id="status" role="status"></span>
+    </div>
+
+    <div class="row">
+      <div id="view"><video id="cam" playsinline muted></video><div id="countdown"></div></div>
+      <pre id="live" aria-label="Live features">no hand yet</pre>
+    </div>
+
+    <div class="row" id="gestures">
+      <button data-gesture="LEFT" class="sel">LEFT: open palm tilted left</button>
+      <button data-gesture="RIGHT">RIGHT: open palm tilted right</button>
+      <button data-gesture="JUMP">JUMP: fist</button>
+    </div>
+
+    <div class="row">
+      <button id="record" disabled>Record take</button>
+      <button id="undo" disabled>Undo last take</button>
+      <button id="download" disabled>Download CSV</button>
+    </div>
+    <progress id="progress" max="1" value="0"></progress>
+
+    <table>
+      <thead><tr><th>Gesture</th><th>Frames</th><th>Takes</th><th>Target 300</th></tr></thead>
+      <tbody id="counts"></tbody>
+    </table>
+
+    <script type="module" src="/src/tools/collect.ts"></script>
+  </body>
+</html>

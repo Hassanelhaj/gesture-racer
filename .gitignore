@@ -1,0 +1,16 @@
+node_modules/
+dist/
+coverage/
+*.log
+.DS_Store
+
+# Fetched / copied by scripts/setup-assets.mjs (reproducible, not committed)
+public/wasm/
+public/models/hand_landmarker.task
+
+# Personal training recordings and Python artefacts (the exported .onnx IS committed)
+ml/data/
+ml/checkpoints/
+ml/.venv/
+__pycache__/
+*.pt
